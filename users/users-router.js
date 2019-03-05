@@ -93,4 +93,23 @@ router.delete("/:id", async (req, res) => {
   }
 })
 
+router.get("/:id/posts", async (req, res) => {
+  const { id } = req.params
+  try {
+    const user = await usersDB.getById(id)
+    if (!user) {
+      res
+        .status(404)
+        .json({ message: "The user with the specified ID does not exist." })
+    } else {
+      const posts = await usersDB.getUserPosts(id)
+      res.status(200).json(posts)
+    }
+  } catch {
+    res
+      .status(500)
+      .json({ error: "The posts for the user could not be fetched" })
+  }
+})
+
 module.exports = router
