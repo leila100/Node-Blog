@@ -32,4 +32,20 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+router.post("/", async (req, res) => {
+  const user = req.body
+  if (!user.name) {
+    res.status(400).json({ errorMessage: "Please provide name for the user." })
+  } else {
+    try {
+      const newUser = await usersDB.insert(user)
+      res.status(201).json(newUser)
+    } catch {
+      res.status(500).json({
+        error: "There was an error while saving the user to the database"
+      })
+    }
+  }
+})
+
 module.exports = router
