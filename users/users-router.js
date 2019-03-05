@@ -64,10 +64,8 @@ router.put("/:id", async (req, res) => {
           .status(400)
           .json({ errorMessage: "Please provide name for the user." })
       } else {
-        console.log(userInfo)
         await usersDB.update(id, userInfo)
         const updatedUser = await usersDB.getById(id)
-        console.log(updatedUser)
         res.status(200).json(updatedUser)
       }
     }
