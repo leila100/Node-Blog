@@ -1,5 +1,6 @@
 const express = require("express")
 const usersDB = require("./userDb")
+const nameUppercase = require("../middleware/userMiddleware")
 
 const router = express.Router()
 router.use(express.json())
@@ -33,7 +34,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", nameUppercase(), async (req, res) => {
   const user = req.body
   if (!user.name) {
     res.status(400).json({ errorMessage: "Please provide name for the user." })
@@ -49,7 +50,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", nameUppercase(), async (req, res) => {
   const { id } = req.params
   try {
     const user = await usersDB.getById(id)
