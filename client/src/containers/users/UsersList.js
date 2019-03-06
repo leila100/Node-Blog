@@ -1,6 +1,19 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import posed from "react-pose"
+
+import { ListWrapper } from "../../styles/userStyles"
+
+const ListContainer = posed.ul({
+  enter: { staggerChildren: 50 },
+  exit: { staggerChildren: 20, staggerDirection: -1 }
+})
+
+const Item = posed.li({
+  enter: { y: 0, opacity: 1 },
+  exit: { y: 50, opacity: 0 }
+})
 
 class UsersList extends React.Component {
   state = {
@@ -18,15 +31,15 @@ class UsersList extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul>
+      <ListWrapper>
+        <ListContainer>
           {this.state.users.map(user => (
-            <Link to={`/users/${user.id}`} key={user.id}>
-              <li>{user.name}</li>
-            </Link>
+            <Item key={user.id}>
+              <Link to={`/users/${user.id}`}>{user.name}</Link>
+            </Item>
           ))}
-        </ul>
-      </div>
+        </ListContainer>
+      </ListWrapper>
     )
   }
 }
