@@ -1,13 +1,18 @@
-import React, { Component } from "react"
+import React from "react"
+import { Route, Switch } from "react-router-dom"
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>Users - Posts App</h1>
-      </div>
-    )
-  }
+import UsersList from "./containers/users/UsersList"
+import UserInfo from "./containers/users/UserInfo"
+
+const App = () => {
+  return (
+    <div>
+      <Switch>
+        <Route path="/users/:id" component={UserInfo} />
+        <Route exact path="/" component={UsersList} />
+      </Switch>
+    </div>
+  )
 }
 
 export default App
